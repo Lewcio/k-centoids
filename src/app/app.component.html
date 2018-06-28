@@ -14,16 +14,27 @@
 <div>
   <button type="button" class="btn btn-primary" (click)="addCentroid()">Add centroid</button>
 </div>
-<table>
-  <tr *ngFor="let i of range(matrix[2], matrix[3])">
-    <td *ngFor="let j of range(matrix[0], matrix[1])">
-      {{ i + j }}
-    </td>
-  </tr>
-</table>
+<app-graph [points]="points" [centroids]="centroids" [centroidPoints]="centroidPoints" [matrix]="matrix"></app-graph>
+<p>Points:</p>
+<ul>
+  <li *ngFor="let point of points">
+    <p>X: {{ point[0] }}, Y: {{ point[1] }}</p>
+  </li>
+</ul>
 <p>Centroids:</p>
 <ul>
   <li *ngFor="let centroid of centroids">
     <p>X: {{ centroid[0] }}, Y: {{ centroid[1] }}</p>
+  </li>
+</ul>
+<p>Centroid points:
+  <button type="button" class="btn btn-primary" (click)="getCentroids(points, centroids)">update centroids</button></p>
+<ul>
+  <li *ngFor="let centroid of centroidPoints">
+    <ul>
+      <li *ngFor="let point of centroid">
+        <p>X: {{ point[0] }}, Y: {{ point[1] }}</p>
+      </li>
+    </ul>
   </li>
 </ul>
