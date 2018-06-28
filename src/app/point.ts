@@ -1,9 +1,9 @@
 export class Point {
-  positionX: number;
-  positionY: number;
+  x: number;
+  y: number;
 
   constructor(positionX: number, positionY: number) {
-    this.positionX = positionX;
-    this.positionY = positionY;
+    this.x = positionX;
+    this.y = positionY;
   }
 }

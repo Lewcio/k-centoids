@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {forEach} from '@angular/router/src/utils/collection';
+import {Point} from './point';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +7,13 @@ import {forEach} from '@angular/router/src/utils/collection';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  points: number[][] = [
-    [4, -3],
-    [4, -2],
-    [-3, 1]
+  points: Point[] = [
+    new Point(4, -3),
+    new Point(4, -2),
+    new Point(-3, 1)
   ];
-  centroids: number[][];
-  centroidPoints: number[][][];
+  centroids: Point[];
+  centroidPoints: Point[][];
 
   // [x - from, x - to, y - from, y - to]
   matrix: number[] = [0, 0, 0, 0];
@@ -51,7 +51,7 @@ export class AppComponent {
     if (this.centroids == null) {
       this.centroids = [this.findBiggestPoint(this.points)];
     } else {
-      const newCentroid: number[] = this.findFarthestPoint(this.points, this.findBiggestPoint(this.points));
+      const newCentroid: Point = this.findFarthestPoint(this.points, this.findBiggestPoint(this.points));
       if (!this.centroids.includes(newCentroid)) {
         this.centroids.push(newCentroid);
         this.centroidPoints = this.getCentroids(this.points, this.centroids);
@@ -59,11 +59,11 @@ export class AppComponent {
     }
   }
 
-  getCentroids(points: number[][], centroids: number[][]): number[][][] {
+  getCentroids(points: Point[], centroids: Point[]): Point[][] {
     // let centroidPoints: number[centroids.length][];
     console.log(points);
     // console.log(centroids);
-    let centroidPoints: number[][][];
+    let centroidPoints: Point[][];
     // expand to have corrent number of arrays
     centroids.forEach(function (n, index) {
       if (index === 0) {
@@ -72,9 +72,9 @@ export class AppComponent {
         centroidPoints.push([]);
       }
     });
-    points.forEach((point: number[]) => {
+    points.forEach((point: Point) => {
       let closest = 0;
-      centroids.forEach((centroid: number[], centroidIndex) => {
+      centroids.forEach((centroid: Point, centroidIndex) => {
         if (this.distance(point, centroid) <= this.distance(point, centroids[closest])) {
           closest = centroidIndex;
           // console.log('point' + point);
@@ -88,7 +88,7 @@ export class AppComponent {
       if (centroidPoints[closest] == null) {
         centroidPoints[closest] = [point];
       } else {
-        centroidPoints[closest].push([point[0], point[1]]);
+        centroidPoints[closest].push(point);
       }
 
 
@@ -98,7 +98,7 @@ export class AppComponent {
   }
 
   addPoint(inputX: HTMLInputElement, inputY: HTMLInputElement): boolean {
-    const newPoint: number[] = [+inputX.value, +inputY.value];
+    const newPoint = new Point(+inputX.value, +inputY.value);
     if (this.points == null) {
       this.points = [newPoint];
     } else {
@@ -108,40 +108,43 @@ export class AppComponent {
       }
     }
     this.updateMatrix(this.points);
+    if (this.centroids.length > 0) {
+      this.centroidPoints = this.getCentroids(this.points, this.centroids);
+    }
     return false;
 }
 
-  findBiggestPoint(points: number[][]): number[] {
-    let biggestPair = [0, 0];
+  findBiggestPoint(points: Point[]): Point {
+    let biggest = new Point(0, 0);
     points.forEach(point => {
-      if (Math.abs(point[0]) + Math.abs(point[1]) > Math.abs(biggestPair[0]) + Math.abs(biggestPair[1])) {
-        biggestPair = point;
+      if (Math.abs(point.x) + Math.abs(point.y) > Math.abs(biggest.x) + Math.abs(biggest.y)) {
+        biggest = point;
       }
     });
-    return biggestPair;
+    return biggest;
   }
 
-  findFarthestPoint(points: number[][], start: number[]): number[] {
-    let farthestPoint: number[] = start;
+  findFarthestPoint(points: Point[], start: Point): Point {
+    let farthestPoint: Point = start;
     points.forEach(point => {
-      if (Math.abs(start[0] - point[0]) + Math.abs(start[1] - point[1])) {
+      if (Math.abs(start.x - point.x) + Math.abs(start.y - point.y)) {
         farthestPoint = point;
       }
     });
     return farthestPoint;
   }
 
-  distance(point1: number[], point2: number[]): number {
-    return Math.abs(point2[0] - point1[0]) + Math.abs(point2[1] - point1[1]);
+  distance(point1: Point, point2: Point): number {
+    return Math.abs(point2.x - point1.x) + Math.abs(point2.y - point1.y);
   }
 
-  updateMatrix(points: number[][]): number[] {
+  updateMatrix(points: Point[]): number[] {
     const result = [0, 0, 0, 0];
     points.forEach(point => {
-      if (point[0] > result[0]) { result[0] = point[0]; }
-      if (point[0] < result[1]) { result[1] = point[0]; }
-      if (point[1] > result[2]) { result[2] = point[1]; }
-      if (point[1] < result[3]) { result[3] = point[1]; }
+      if (point.x > result[0]) { result[0] = point.x; }
+      if (point.x < result[1]) { result[1] = point.x; }
+      if (point.y > result[2]) { result[2] = point.y; }
+      if (point.y < result[3]) { result[3] = point.y; }
     });
     return result;
   }
