@@ -1,27 +1,24 @@
-# KCentoids
+# K-Centoids
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
+**Algorytm centroidów (k-średnich, ang. k-means)** jest jednym z algorytmów stosowanym w analizie skupień, wykorzystywanym m.in. w kwantyzacji wektorowej. Algorytm nazywany jest także algorytmem klastrowym lub - od nazwisk twórców Linde, Buzo i Graya - algorytmem LBG.
 
-## Development server
+## Wymagania
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Do działania angular-cli potrzebny jest [Node JS](https://nodejs.org/en/download/) (>= 4.x.x) wraz z npm (>= 3.x.x). Angular-cli instalujemy z najstępującej linijki `npm install -g angular-cli`
 
-## Code scaffolding
+## Uruchamianie projektu
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Uruchomianie projektu w trybie developerskim `ng serve`. Aplikacja uruchamia się na `http://localhost:4200/`. Aplikacja automatycznie odświeży się w momencie zmienienia kodu.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Budowanie projektu
 
-## Running unit tests
+`ng build` generuje projekt w finalną aplikacje. Wygenerowane zasoby znajdująsię w katalogu `dist/`. Używając flagi `-prod`, projekt budowany jest w produkcyjną aplukację.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Obsługa programu
+#### 1. Wprowadzenie punktów
+Podajemy współrzędne punktu **X** i **Y** w oknie _Add point_ i dodajemy je przez kliknięcie przyciksu _Add point_. **X** i **Y**należą do zbioru liczb rzeczywistych.
+#### 2. Dodanie centroidów
+W przypadku pojawienia się w karcie _Points_ współrzędnych punktu, można dodać punkt centroidu przyciskiem _Add centroid_. Punkty należące do dodanych centroidów znajdują się w karcie _Centroid points_.
+#### 3. Aktualizowanie wyników centroidów
+Kiedy w jednej grupie punktów należących do jednego centroidu występuje więcej niz 1 punkt, klikając przycisk _update centroids_, program wylicza nowe współrzędne na podstawie punktów należących do danego centroidu.

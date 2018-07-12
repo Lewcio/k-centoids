@@ -1,40 +1,58 @@
 <form>
-  <div class="row">
-    <div class="col">
-      <input type="text" class="form-control" placeholder="X" #inputX>
-    </div>
-    <div class="col">
-      <input type="text" class="form-control" placeholder="Y" #inputY>
-    </div>
-    <div class="col">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">Add point</h5>
+      <div class="row">
+        <div class="col-1">
+          <input type="text" class="form-control" placeholder="X" #inputX>
+        </div>
+        <div class="col-1">
+          <input type="text" class="form-control" placeholder="Y" #inputY>
+        </div>
+      </div>
       <button type="button" class="btn btn-primary" (click)="addPoint(inputX, inputY)">Add point</button>
     </div>
   </div>
 </form>
-<div>
-  <button type="button" class="btn btn-primary" (click)="addCentroid()">Add centroid</button>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">Add centroid to map</h5>
+    <button type="button" class="btn btn-primary" (click)="addCentroid()">Add centroid</button>
+  </div>
 </div>
-<app-graph [points]="points" [centroids]="centroids" [centroidPoints]="centroidPoints" [matrix]="matrix"></app-graph>
-<p>Points:</p>
-<ul>
-  <li *ngFor="let point of points">
-    <p>X: {{ point.x }}, Y: {{ point.y }}</p>
-  </li>
-</ul>
-<p>Centroids:</p>
-<ul>
-  <li *ngFor="let centroid of centroids">
-    <p>X: {{ centroid.x }}, Y: {{ centroid.y }}</p>
-  </li>
-</ul>
-<p>Centroid points:
-  <button type="button" class="btn btn-primary" (click)="getCentroids(points, centroids)">update centroids</button></p>
-<ul>
-  <li *ngFor="let centroid of centroidPoints">
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">Points</h5>
     <ul>
-      <li *ngFor="let point of centroid">
+      <li *ngFor="let point of points">
         <p>X: {{ point.x }}, Y: {{ point.y }}</p>
       </li>
     </ul>
-  </li>
-</ul>
+  </div>
+</div>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">Centroids</h5>
+    <ul>
+      <li *ngFor="let centroid of centroids">
+        <p>X: {{ centroid.x }}, Y: {{ centroid.y }}</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">Centroid points:</h5>
+    <p><button type="button" class="btn btn-primary" (click)="updateCentroids()">update centroids</button></p>
+    <ul>
+      <li *ngFor="let centroid of centroidPoints">
+        <ul>
+          <li *ngFor="let point of centroid">
+            <p>X: {{ point.x }}, Y: {{ point.y }}</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<app-graph [points]="points" [centroids]="centroids" [centroidPoints]="centroidPoints" [matrix]="matrix"></app-graph>

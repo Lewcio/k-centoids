@@ -1,7 +1,7 @@
-<table>
-  <tr *ngFor="let i of range(this.matrix[2], this.matrix[3]);">
-    <td *ngFor="let j of range(this.matrix[0], this.matrix[1]);">
-      {{ i }} {{ j }}
+<table class="table table-bordered">
+  <tr *ngFor="let y of range(this.matrix[2], this.matrix[3], true);">
+    <td *ngFor="let x of range(this.matrix[0], this.matrix[1], true);" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+      [{{ x }}, {{ y }}]
     </td>
   </tr>
 </table>
